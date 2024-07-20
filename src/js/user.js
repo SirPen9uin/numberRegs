@@ -9,3 +9,10 @@ export function loadUser(id) {
 export function saveUser(user) {
   throw new Error('Unimplemented');
 }
+
+export default class PhoneValidator {
+  phoneRegex(value) {
+    const result = value.replace(/[+() -]/g, '')
+    return '+' + result.replace(/^[7-8](?=9)/g, '7')
+  }
+}

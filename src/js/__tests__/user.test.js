@@ -1,5 +1,6 @@
 import { loadUser } from '../user';
 import { httpGet } from '../http';
+import PhoneValidator from '../user';
 
 jest.mock('../http');
 
@@ -14,3 +15,15 @@ test('should call loadUser once', () => {
   expect(response).toEqual({});
   expect(httpGet).toHaveBeenCalledWith('http://server:8080/users/1');
 });
+
+const phonesList = [
+    ['8 (927) 000-00-00', '+79270000000'],
+    ['+7 960 000 00 00', '+79600000000'],
+    ['+86 000 000 0000', '+860000000000']
+  ]
+
+test.each(phonesList)('Phonenumber test %s', (value, result) => {
+  const regex = new PhoneValidator()
+  const regexResult = regex.phoneRegex(value)
+  expect(regexResult).toBe(result)
+})
